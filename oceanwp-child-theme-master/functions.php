@@ -49,21 +49,40 @@ add_filter('locale_stylesheet_uri', 'chld_thm_cfg_locale_css');
 // END ENQUEUE PARENT ACTION
 // hook header admin
 /*
-function afficher_admin_dans_header()
+function display_user_menu()
 {
-    if (current_user_can('administrator')) {
-        echo '<span>Admin</span>';
+    if (is_user_logged_in()) {
+        // Utilisateur connecté
+        if (current_user_can('administrator')) {
+            // Menu pour les administrateurs
+            wp_nav_menu(array('menu' => 'Admin_menu'));
+        } else {
+            // Menu pour les autres utilisateurs connectés
+            wp_nav_menu(array('menu' => 'wp menu'));
+        }
     }
 }
-add_action('elementor/header/render', 'afficher_admin_dans_header');
+*/
+// end
 
+// Affiche le menu différent selon les utilisateurs connectés
+// Affiche le menu différent selon les utilisateurs connectés
+/*display_user_menu();*/
+add_filter('wp_nav_menu_objects', 'filter_menu_items', 10, 2);
 
- */
-function afficher_admin_header()
+function filter_menu_items($items, $args)
 {
-    if (is_user_logged_in() && current_user_can('manage_options')) {
-        echo '<div style="text-align: center;">';
-        echo '<span style="display: block;">Admin</span>';
-        echo '</div>';
+    // Vérifie si l'utilisateur est connecté
+    if (is_user_logged_in()) {
+        return $items;
     }
+
+    foreach ($items as $key => $item) {
+        // Supprime le lien Admin du menu pour les utilisateurs non connectés
+        if ($item->title == 'Admin') {
+            unset($items[$key]);
+        }
+    }
+
+    return $items;
 }
