@@ -1,0 +1,32 @@
+.forminator-input {
+    width: 383px;
+    height: 71px;
+    margin-left: 12%;
+}
+
+.forminator-textarea {
+    width: 383px;
+    height: 237px;
+    margin-left: 12%;
+}
+
+.forminator-button {
+    width: 198px;
+    height: 55px;
+    margin-left: 25%;
+}
+
+.forminator-label {
+    margin-left: 12%;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 767px) {
+
+    .forminator-input,
+    .forminator-textarea,
+    .forminator-button {
+        width: 300px;
+        margin-left: 0;
+    }
+}
